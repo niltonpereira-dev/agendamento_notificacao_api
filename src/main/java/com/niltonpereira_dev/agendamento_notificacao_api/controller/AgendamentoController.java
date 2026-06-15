@@ -1,14 +1,11 @@
-package com.niltonpereira_dev.agendamento_notificacao_api.controller.dto;
+package com.niltonpereira_dev.agendamento_notificacao_api.controller;
 
 import com.niltonpereira_dev.agendamento_notificacao_api.business.service.AgendamentoService;
 import com.niltonpereira_dev.agendamento_notificacao_api.controller.dto.in.AgendamentoDTO;
 import com.niltonpereira_dev.agendamento_notificacao_api.controller.dto.out.AgendamentoDTOOut;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/agendamento")
@@ -20,5 +17,10 @@ public class AgendamentoController {
     @PostMapping
     public ResponseEntity<AgendamentoDTOOut> gravarAgendamneto(@RequestBody AgendamentoDTO agendamentoDTO){
     return ResponseEntity.ok(agendamentoService.gravarAgendamento(agendamentoDTO));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AgendamentoDTOOut> buscarAgendamentoPorId(@PathVariable("id") Long id){
+        return ResponseEntity.ok(agendamentoService.buscarAgendamentoPorId(id));
     }
 }
