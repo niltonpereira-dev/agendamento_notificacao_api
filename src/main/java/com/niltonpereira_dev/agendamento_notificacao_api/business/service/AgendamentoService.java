@@ -3,6 +3,7 @@ package com.niltonpereira_dev.agendamento_notificacao_api.business.service;
 import com.niltonpereira_dev.agendamento_notificacao_api.business.mapper.IAgendamentoMapper;
 import com.niltonpereira_dev.agendamento_notificacao_api.controller.dto.in.AgendamentoDTO;
 import com.niltonpereira_dev.agendamento_notificacao_api.controller.dto.out.AgendamentoDTOOut;
+import com.niltonpereira_dev.agendamento_notificacao_api.infrastructure.entities.Agendamento;
 import com.niltonpereira_dev.agendamento_notificacao_api.infrastructure.exception.NotFoundException;
 import com.niltonpereira_dev.agendamento_notificacao_api.infrastructure.repositories.AgendamentoRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,4 +23,10 @@ public class AgendamentoService {
     public AgendamentoDTOOut buscarAgendamentoPorId(Long id){
         return agendamentoMapper.ParaOut(repository.findById(id).orElseThrow(() -> new NotFoundException("Id não encontrado")));
     }
+
+    public void cancelarAgendamento(Long id){
+        Agendamento agendamento = repository.findById(id).orElseThrow(() -> new NotFoundException("Id não encontrado"));
+        repository.save(agendamentoMapper.paraEntityCancelamento(agendamento));
+    }
+
 }
